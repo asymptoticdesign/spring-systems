@@ -270,6 +270,13 @@ ParticleSystem.prototype.makeAttraction = function(a, b, k, d) {
 	this.attractions.push(m);
 	return m;
 }
+
+ParticleSystem.prototype.makeSpiral = function(a, b, k, d) {
+	var m = new Spiral(a, b, k, d);
+	this.forces.push(m);
+	return m;
+}
+
 ParticleSystem.prototype.clear = function() {
 	this.particles.clear();
 	this.springs.clear();
@@ -566,6 +573,53 @@ Attraction.prototype.apply = function() {
 	}
 	if(!this.b.fixed) {
 	    this.b.force.add(a2bX, a2bY, a2bZ)
+	}
+    }
+}
+
+function Spiral(a, b, k, distanceMin) {
+    //particles
+    this.a = a;
+    this.b = b;
+    //strength
+    this.k = k;
+    //is it on?
+    this.on = true;
+    this.distanceMin = distanceMin;
+    this.distanceMinSquared = distanceMin*distanceMin;
+}
+
+Spiral.prototype.apply = function() {
+    if (this.on && !this.a.fixed || !this.b.fixed) {
+	var a2bX = this.a.position.x - this.b.position.x;
+	var a2bY = this.a.position.y - this.b.position.y;
+	var a2bZ = this.a.position.z - this.b.position.z;
+	
+	var a2bDistanceSquared = a2bX*a2bX + a2bY*a2bY + a2bZ*a2bZ;
+;
+	if (a2bDistanceSquared < this.distanceMinSquared) {
+	    a2bDistanceSquared = this.distanceMinSquared;
+	}
+	
+	var force = this.k * this.a.mass * this.b.mass / a2bDistanceSquared;
+	var length = Math.sqrt(a2bDistanceSquared);
+
+	//create unit vector
+	a2bX /= length;
+	a2bY /= length;
+	a2bZ /= length;
+
+	//multiply by force
+	a2bX *= force;
+	a2bY *= force;
+	a2bZ *= force;
+
+	//apply spiral force -- note that we swapped the order of addition!
+	if(!this.a.fixed) {
+	    this.a.force.add(a2bY, -a2bX, a2bZ)
+	}
+	if(!this.b.fixed) {
+	    this.b.force.add(-a2bY, a2bX, a2bZ)
 	}
     }
 }

@@ -5,14 +5,13 @@ var width = 800;
 var height = 600;
 var numParticles_X = width / cell_width;
 var numParticles_Y = height / cell_height;
-var SPRING_STRENGTH = 1.0;
-var SPRING_DAMPING = 3.0;
+var SPRING_STRENGTH = 0.1;
+var SPRING_DAMPING = 1.5;
 var SPRING_LENGTH = 0.1;
-var ATTRACT_STRENGTH = -100000;
+var ATTRACT_STRENGTH = 10000;
 var grey = 68;
 var numParticles;
 var numSprings;
-
 
 //object managers
 var pSys;
@@ -33,7 +32,7 @@ function setup() {
     p.makeFixed();
     force_particles.push(p);
     for(i = 0; i < numParticles - 1; i++) {
-	pSys.makeAttraction(p, pSys.particles[i], -1 * ATTRACT_STRENGTH, 5.0);
+	pSys.makeSpiral(p, pSys.particles[i], -1 * ATTRACT_STRENGTH, 50.0);
     }
     //begin simulation
     interval = setInterval(draw,1);
@@ -44,7 +43,7 @@ function draw() {
     //runs every frame
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(0,0,width,height);
-    pSys.tick(0.2);
+    pSys.tick(0.1);
     console.log("Tick");
     render();
 }
