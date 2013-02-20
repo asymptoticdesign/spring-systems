@@ -1,0 +1,13 @@
+<html>
+<head>
+  <title>Spring Systems</title>
+  <script type="application/javascript" src="radial.js"></script>
+  <script type="application/javascript" src="traer.js"></script>
+</head>
+
+<body onload="setup()">
+  <canvas id="radiolaria" width="800" height="600"></canvas>
+  <br>
+</body>
+
+</html>
