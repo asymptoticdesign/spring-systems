@@ -1,0 +1,17 @@
+float newX = cos(theta) * oldX + sin(theta) * oldY;
+float newY = -sin(theta) * oldX + cos(theta) * oldY;
+
+x = -x
+y = -y
+
+translate(0,10)
+
+x += 0
+y += 10
+
+scale(1,-1)
+
+x = x;
+y = -y;
+
+newX = -(oldX - width/2)
