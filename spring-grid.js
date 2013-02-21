@@ -1,8 +1,8 @@
 //global variables
 var cell_width = 20;
 var cell_height = 20;
-var width = 800;
-var height = 600;
+var width = 1200;
+var height = 800;
 var numParticles_X = width / cell_width;
 var numParticles_Y = height / cell_height;
 var SPRING_STRENGTH = 1.0;
@@ -32,7 +32,7 @@ function setup() {
     p.makeFixed();
     force_particles.push(p);
     for(i = 0; i < numParticles - 1; i++) {
-	pSys.makeSpiral(p, pSys.particles[i], 1 * ATTRACT_STRENGTH, 50.0);
+	pSys.makeSpiral(p, pSys.particles[i], -1 * ATTRACT_STRENGTH, 50.0);
     }
     //begin simulation
     interval = setInterval(draw,1);
